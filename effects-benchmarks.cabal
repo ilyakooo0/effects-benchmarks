@@ -1,79 +1,49 @@
-cabal-version:       2.2
-name:                effects-benchmarks
-version:             0.1.0.0
-homepage:            https://github.com/patrickt/effects-benchmarks#readme
-license:             BSD-3-Clause
-license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2018 Author name here
-category:            Web
-build-type:          Simple
-extra-source-files:  README.md
+cabal-version: 1.12
 
-common shared
-  default-language:    Haskell2010
-  ghc-options:         -Wall -Werror -O2 -flate-specialise
-  build-depends:       base >= 4.7 && < 5
+-- This file has been generated from package.yaml by hpack version 0.34.2.
+--
+-- see: https://github.com/sol/hpack
 
-library instances-for-shallow
-  import:          shared
-  hs-source-dirs:  instances
-  exposed-modules: Shallow.HTTP
-                 , Shallow.Stateful
-                 , Shallow.StatefulExcept
-
-library instances-for-exteff
-  import: shared
-  hs-source-dirs:  instances
-  exposed-modules: ExtEff.Stateful
-                 , ExtEff.StatefulExcept
-                 , ExtEff.HTTP
-  build-depends:   extensible-effects
-
-library instances-for-mtl
-  import:          shared
-  hs-source-dirs:  instances
-  exposed-modules: MTL.Stateful
-                 , MTL.StatefulExcept
-                 , MTL.HTTP
-  build-depends:   mtl
-
-library instances-for-fused-effects
-  import:          shared
-  hs-source-dirs:  instances
-  exposed-modules: Fused.Stateful
-                 , Fused.StatefulExcept
-                 , Fused.HTTP
-  build-depends:   fused-effects > 1 && <1.1
-
-library instances-for-freer-simple
-  import:          shared
-  hs-source-dirs:  instances
-  exposed-modules: Freer.Stateful
-                 , Freer.StatefulExcept
-                 , Freer.HTTP
-  build-depends:   freer-simple
-
-library instances-for-polysemy
-  import:          shared
-  hs-source-dirs:  instances
-  exposed-modules: Poly.Stateful
-                 , Poly.StatefulExcept
-                 , Poly.HTTP
-  build-depends:   polysemy
+name:           effects-benchmarks
+version:        0.0.0
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
 
 benchmark effects-benchmarks
-  import:         shared
-  type:           exitcode-stdio-1.0
-  hs-source-dirs: src
-  build-depends:  instances-for-mtl
-                , instances-for-fused-effects
-                , instances-for-freer-simple
-                , instances-for-polysemy
-                , instances-for-shallow
-                , instances-for-exteff
-                , gauge
-                , weigh
-                , polysemy
-  main-is:        Main.hs
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      ExtEff.Bench
+      ExtEff.HTTP
+      ExtEff.Stateful
+      ExtEff.StatefulExcept
+      Freer.HTTP
+      Freer.Stateful
+      Freer.StatefulExcept
+      Fused.HTTP
+      Fused.Stateful
+      Fused.StatefulExcept
+      MTL.HTTP
+      MTL.Stateful
+      MTL.StatefulExcept
+      Poly.HTTP
+      Poly.Stateful
+      Poly.StatefulExcept
+      Shallow.HTTP
+      Shallow.Stateful
+      Shallow.StatefulExcept
+      Paths_effects_benchmarks
+  hs-source-dirs:
+      instances
+      src
+  build-depends:
+      base
+    , extensible-effects
+    , freer-simple
+    , fused-effects
+    , gauge
+    , mtl
+    , polysemy
+    , weigh
+  default-language: Haskell2010

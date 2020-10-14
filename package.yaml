@@ -1,0 +1,17 @@
+name: effects-benchmarks
+
+benchmarks:
+  effects-benchmarks:
+    main: Main.hs
+    dependencies:
+      - base
+      - polysemy
+      - freer-simple
+      - fused-effects
+      - mtl
+      - extensible-effects
+      - gauge
+      - weigh
+    source-dirs:
+      - instances
+      - src
