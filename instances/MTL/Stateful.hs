@@ -14,3 +14,7 @@ put = MTL.put
 
 runStateful :: Int -> StateM a -> (Int, a)
 runStateful n x = swap (MTL.runState x n)
+
+countDownPut :: Int -> (Int, Int)
+countDownPut start = runStateful start go where
+  go = get >>= (\n -> if n < 0 then pure n else put (n - 1) *> go)

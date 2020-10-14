@@ -18,3 +18,7 @@ throw = MTL.throwError
 
 runStatefulExcept :: Int -> StateM a -> Either String (Int, a)
 runStatefulExcept n x = fmap swap . MTL.runExcept $ MTL.runStateT x n
+
+countDownExc :: Int -> Either String (Int, Int)
+countDownExc start = runStatefulExcept start go where
+  go = get >>= (\n -> if n <= 0 then throw "what" else put (n - 1) *> go)

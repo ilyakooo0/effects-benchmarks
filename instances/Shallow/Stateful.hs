@@ -22,3 +22,7 @@ put x = StateM (\_ -> (x, ()))
 
 runStateful :: Int -> StateM a -> (Int, a)
 runStateful n (StateM f) = f $! n
+
+countDownPut :: Int -> (Int, Int)
+countDownPut start = runStateful start go where
+  go = get >>= (\n -> if n < 0 then pure n else put (n - 1) *> go)

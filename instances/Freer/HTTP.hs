@@ -3,6 +3,7 @@
 module Freer.HTTP where
 
 import Control.Monad.Freer
+import Control.Monad
 
 type HttpM = Eff '[HTTP, IO]
 
@@ -34,3 +35,10 @@ doHttp = interpret
 
 runHttp :: HttpM a -> IO a
 runHttp = runM . doHttp
+
+doHTTP :: Int -> IO Int
+doHTTP n = runHttp $ do
+  open' "cats"
+  replicateM_ n (get' *> post' "cats")
+  close'
+  pure n

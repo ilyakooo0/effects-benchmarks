@@ -45,3 +45,10 @@ runHttp = \case
   Shut     -> pure ()
   Post s   -> pure ("posted " <> s)
   HGet     -> pure "lmap"
+
+doHTTP :: Int -> IO Int
+doHTTP n = runHttp $ do
+  open' "cats"
+  replicateM_ n (get' *> post' "cats")
+  close'
+  pure n

@@ -3,6 +3,7 @@
 module Poly.HTTP where
 
 import Polysemy
+import Control.Monad
 
 type HttpM = Sem '[Http, Final IO]
 
@@ -35,3 +36,10 @@ runHttp' = interpret $ \case
 
 runHttp :: HttpM a -> IO a
 runHttp = runFinal . runHttp'
+
+doHTTP :: Int -> IO Int
+doHTTP n = runHttp $ do
+  open' "cats"
+  replicateM_ n (get' *> post' "cats")
+  close'
+  pure n

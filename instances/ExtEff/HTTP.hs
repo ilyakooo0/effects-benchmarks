@@ -5,6 +5,7 @@ module ExtEff.HTTP where
 import Control.Eff
 import Control.Eff.Extend
 import Data.Function
+import Control.Monad
 
 type HttpM = Eff '[HTTP, Lift IO]
 
@@ -38,3 +39,10 @@ doHttp = fix (handle_relay pure)
 
 runHttp :: HttpM a -> IO a
 runHttp = runLift . doHttp
+
+doHTTP :: Int -> IO Int
+doHTTP n = runHttp $ do
+  open' "cats"
+  replicateM_ n (get' *> post' "cats")
+  close'
+  pure n

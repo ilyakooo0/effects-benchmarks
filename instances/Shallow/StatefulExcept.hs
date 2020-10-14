@@ -29,3 +29,7 @@ throw s = StateM (\_ -> Left s)
 
 runStatefulExcept :: Int -> StateM a -> Either String (Int, a)
 runStatefulExcept n (StateM f) = f $! n
+
+countDownExc :: Int -> Either String (Int, Int)
+countDownExc start = runStatefulExcept start go where
+  go = get >>= (\n -> if n <= 0 then throw "what" else put (n - 1) *> go)

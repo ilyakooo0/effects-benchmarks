@@ -7,6 +7,7 @@ import Control.Algebra
 import Control.Monad.IO.Class
 import GHC.Generics (Generic1)
 import Control.Carrier.Lift
+import Control.Monad
 
 newtype HttpC m a = HttpC { runHttpC :: m a }
   deriving newtype (Applicative, Functor, Monad, MonadIO)
@@ -43,3 +44,10 @@ instance (Effect sig, Algebra sig m) => Algebra (HTTP :+: sig) (HttpC m) where
 
 runHttp :: HttpM a -> IO a
 runHttp = runM . runHttpC
+
+doHTTP :: Int -> IO Int
+doHTTP n = runHttp $ do
+  open' "cats"
+  replicateM_ n (get' *> post' "cats")
+  close'
+  pure n
