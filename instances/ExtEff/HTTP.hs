@@ -40,8 +40,8 @@ doHttp = fix (handle_relay pure)
 runHttp :: HttpM a -> IO a
 runHttp = runLift . doHttp
 
-doHTTP :: Int -> IO Int
-doHTTP n = runHttp $ do
+doHTTP :: Int -> Eff '[HTTP, Lift IO] Int
+doHTTP n = do
   open' "cats"
   replicateM_ n (get' *> post' "cats")
   close'

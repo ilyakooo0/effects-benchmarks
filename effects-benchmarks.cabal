@@ -18,18 +18,23 @@ benchmark effects-benchmarks
       ExtEff.HTTP
       ExtEff.Stateful
       ExtEff.StatefulExcept
+      Freer.Bench
       Freer.HTTP
       Freer.Stateful
       Freer.StatefulExcept
+      Fused.Bench
       Fused.HTTP
       Fused.Stateful
       Fused.StatefulExcept
+      MTL.Bench
       MTL.HTTP
       MTL.Stateful
       MTL.StatefulExcept
+      Poly.Bench
       Poly.HTTP
       Poly.Stateful
       Poly.StatefulExcept
+      Shallow.Bench
       Shallow.HTTP
       Shallow.Stateful
       Shallow.StatefulExcept

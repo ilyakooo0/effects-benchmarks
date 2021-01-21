@@ -1,24 +1,11 @@
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE TypeApplications, DataKinds #-}
 module Poly.StatefulExcept where
 
 import Polysemy
-import Polysemy.State as State
-import Polysemy.Error as Err
+import Polysemy.State
+import Polysemy.Error
 
-type StateM = Sem '[State Int, Error String]
-
-get' :: StateM Int
-get' = State.get @Int
-
-put' :: Int -> StateM ()
-put' = State.put @Int
-
-throw' :: String -> StateM a
-throw' = Err.throw
-
-runStatefulExcept :: Int -> StateM a -> Either String (Int, a)
-runStatefulExcept n x = run . runError $ State.runState n x
-
-countDownExc :: Int -> Either String (Int, Int)
-countDownExc start = runStatefulExcept start go where
-  go = get' >>= (\n -> if n <= 0 then throw' "what" else put' (n - 1) *> go)
+countDownExc :: (Member (State Int) r, Member (Error String) r) => Sem r a
+countDownExc = get @Int >>= (\n -> if n <= 0 then throw "what" else put @Int (n - 1) *> countDownExc)

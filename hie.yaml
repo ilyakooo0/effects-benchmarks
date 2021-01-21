@@ -1,0 +1,7 @@
+cradle:
+  stack:
+    - path: "./instances"
+      component: "effects-benchmarks:bench:effects-benchmarks"
+
+    - path: "./src/Main.hs"
+      component: "effects-benchmarks:bench:effects-benchmarks"

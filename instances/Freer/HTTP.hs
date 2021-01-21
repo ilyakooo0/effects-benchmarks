@@ -36,8 +36,8 @@ doHttp = interpret
 runHttp :: HttpM a -> IO a
 runHttp = runM . doHttp
 
-doHTTP :: Int -> IO Int
-doHTTP n = runHttp $ do
+doHTTP :: Int -> Eff '[HTTP, IO] Int
+doHTTP n = do
   open' "cats"
   replicateM_ n (get' *> post' "cats")
   close'
